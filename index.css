@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
+
+h1 {
+    position: relative;
+}
+
+.title {
+    text-transform: uppercase;
+    position: relative;
+    background: none;
+    color: white;
+    letter-spacing: 10px;
+    font-size: 40px;
+    left: 32.5%;
+    top: 70px;
+    font-family: 'Josefin Sans', sans-serif;
+}
+.background {
+    position: absolute;
+    width: 100%;
+}
+
+.list {
+    margin: 0px;
+}
+
+.container {
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: hsl(0, 0%, 98%);
+    position: relative;
+    background: hsl(0, 0%, 98%);
+    width: 530px;
+    left: 32.5%;
+    top: 70px;
+    border-radius: 6px;
+}
+.below-list {
+    display: inline;
+    background: none;
+    color: hsl(0, 0%, 98%);
+    margin-top: 100px;
+    border-radius: 0px;
+}
+
+.items-left {
+    font-size: 13px;
+    margin-left: 25px;
+}
+
+.menu {
+    display: inline;
+    /* text-decoration: cur; */
+    cursor: pointer;
+}
+
+.menu li {
+    display: inline-block;
+}
+
+.todo {
+    border-radius: 15px;
+}
+
+.menu-item:hover {
+    display: inline-block;
+    color: hsl(235, 19%, 35%);
+}
+
+.active {
+    color: hsl(220, 98%, 61%);
+}
+.todo-item {
+    padding: 15px 25px;
+    display: block;
+    margin-bottom: 10px;
+    border-bottom: 0.1px solid hsl(233, 11%, 84%);
+    cursor: pointer;
+}
+.todo-text {
+    margin-left: 10px;
+    display: inline-block;
+}
+.done {
+    text-decoration: line-through;
+    color: hsl(236, 33%, 92%);
+}
+.new-todo-item {
+    padding: 15px 25px;
+    display: block;
+    margin-bottom: 10px;
+}
+.menu-item {
+    margin-left: 10px;
+}
+#actions {
+    position: absolute;
+    right: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    color: hsl(235, 19%, 35%);
+}
+#actions .menu-item {
+    margin-left: 0px;
+}
+#states {
+    position: absolute;
+    right: 35%;
+    font-weight: 700;
+}
+.list-footer {
+    /* display: inline-block; */
+    /* margin-right: 5px; */
+    padding: 5px 10px;
+    position: relative;
+    color: hsl(233, 11%, 84%);
+    font-weight: 400;
+    height: 30px;
+}
+
+.new-task-input {
+    border: none;
+    background-color: hsl(0, 0%, 98%);
+}
+.new-task-input:focus {
+    border: none;
+}
+
+input.new-task-input {
+    margin: 0;
+    text-align: left;
+    outline: 0;
+    z-index: 2;
+    border-radius: 5px;
+    padding: 15px 25px;
+    /* font-size: 40px; */
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.19); */
+}

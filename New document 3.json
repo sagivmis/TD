@@ -1,0 +1,28 @@
+{
+    {
+        "id":1,
+        "task": "Complete online Javascript course",
+        "status": false,
+    },
+    
+    {
+        "id":2,
+        "task": "Jog around the park 3x",
+        "status": false,
+    },
+    {
+        "id":3,
+        "task": "10 minutes meditation",
+        "status": false,
+    },
+    {
+        "id":4,
+        "task": "Eat",
+        "status": false,
+    },
+    {
+        "id":5,
+        "task": "Study for exam",
+        "status": true,
+    },
+}
