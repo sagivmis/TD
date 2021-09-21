@@ -1,51 +1,104 @@
 tasks=[
     {
-        id:1,
+        id:0,
         task: "Complete online Javascript course",
         status: false,
     },
     
     {
-        id:2,
+        id:1,
         task: "Jog around the park 3x",
         status: false,
     },
     {
-        id:3,
+        id:2,
         task: "10 minutes meditation",
         status: false,
     },
     {
-        id:4,
+        id:3,
         task: "Eat",
         status: false,
     },
     {
-        id:5,
+        id:4,
         task: "Study for exam",
         status: true,
     },
 ]
-
+states = [
+    {
+        id:0,
+        state: "All",
+        status: false,
+    },
+    {
+        id:1,
+        state: "Active",
+        status: true,
+    },
+    {
+        id:2,
+        state: "Completed",
+        status: false,
+    },
+]
 const todoListElement = document.getElementById("todo");
 const itemsLeft = document.getElementById("items-left");
 const newTaskUlElement = document.getElementById("new-task");
-
+const stateMenuElement = document.getElementById("states");
+const actionMenuElement = document.getElementById("actions");
 
 LoadTasks();
 NewTask();
+LoadListFooter();
 
 let newTodo = document.getElementById(`new-todo-item ${tasks.length+1}`)
 let newTaskTextInputField = GetTaskTextInputField();
 
-// AddTextListener();
+
+function LoadListFooter(){
+    CalculateItemsLeft();
+    LoadStateMenu();
+    LoadActionsMenu();
+}
+
+function LoadActionsMenu(){
+
+}
+
+function LoadStateMenu(){
+    states.map((state)=>{
+        let li = document.createElement("li");
+        li.className=`menu-item ${state.id}${state.status? " active":""}`
+        li.innerHTML = state.state;
+        li.addEventListener("click", ToggleState)
+        stateMenuElement.appendChild(li);
+    })
+}
+
+function ToggleState(e){
+    let stateId = parseInt(e.target.classList[1]);
+    states.map((state)=>{
+        if(state.id === stateId)
+        state.status = true;
+        else state.status = false;
+    })
+    console.log(stateId);
+    ClearTasks(stateMenuElement);
+    LoadStateMenu();
+}
 
 function GetTaskTextInputField() {
     return document.getElementById(`text-${tasks.length + 1}`);
 }
 
-function AddTextListener() {
-    newTaskTextInputField.addEventListener("keyup", AddTask);
+function CalculateItemsLeft(){
+    let total =0;
+    tasks.map((task)=>{
+        if(!task.status) total+=1;
+    })
+    itemsLeft.innerHTML = `${total} items left`
 }
 
 function ClearTasks(list){
@@ -91,6 +144,8 @@ function LoadTasks() {
         
         todoListElement.appendChild(tag);
     });
+    
+    CalculateItemsLeft();
 }
 function AddTask(e){
     let inputText;
