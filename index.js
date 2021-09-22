@@ -55,7 +55,7 @@ states = [
 ]
 
 let width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-console.log(width);
+
 
 const todoListElement = document.getElementById("todo");
 const itemsLeft = document.getElementById("items-left");
@@ -93,6 +93,7 @@ function Reload(statedId) {
     ClearLastTask();
     NewTask();
     LoadTasks(statedId);
+    AddDraggableListeners();
     // 0 for all, 1 for active, 2 for completed
 }
 
@@ -332,31 +333,22 @@ function DragDrop(e){
     // console.log(e);
 }
 function SwitchTasks(draggedTaskId,dragOverTaskId){
-    console.log("switch");
-    console.log(dragOverTaskId);
-    console.log(draggedTaskId);
     tasks.forEach((task)=>{
         if(task.id == draggedTaskId) {
-            console.log(task);
             task.id = dragOverTaskId;
-            console.log(tasks);
         }
         else if (task.id == dragOverTaskId) {
-            console.log(task);
             task.id = draggedTaskId;
-            console.log(tasks);
         }
 
     })
-    // console.log(tasks);
-    console.log(tasks);
+    
     SortTasksById();
-    console.log(tasks);
+    
     Reload(GetActiveStateId());
     AddDraggableListeners();
 }
 function SortTasksById(){
-    console.log("sorting");
     tasks = tasks.sort((a,b)=>{
         return a.id - b.id;
     })
