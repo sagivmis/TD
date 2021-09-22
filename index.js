@@ -145,14 +145,24 @@ function ToggleStatus(e){
     
     LoadTasks(GetActiveStateId());
 }
-
+function TasksLengthByState(){
+    let state = GetActiveStateId();
+    let length = 0;
+    if(state===0) return tasks.length;
+    else if(state === 1) state = false;
+    else state = true;
+    tasks.forEach((task)=>{
+        if(task.status === state) length+=1;
+    })
+    return length;
+}
 function LoadTasks(statusState) {
     let status = statusState === 0 ? "All" : statusState === 1 ? "Active" : "Completed";
 
     if(status === "Active") statusState = false;
     else if(status === "Completed") statusState = true;
     ClearTasks(todoListElement);
-    if(tasks.length ===0){
+    if(TasksLengthByState() ===0){
         let li = document.createElement("li");
         li.className = `todo-item`;
 
@@ -179,6 +189,7 @@ function CreateTaskElement(task) {
     li.className = `todo-item ${task.id}`;
     li.onclick = ToggleStatus;
     let checkbox = document.createElement("input");
+    
     if (task.status)
         checkbox.checked = true;
     checkbox.type = "checkbox";
