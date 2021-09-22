@@ -30,6 +30,11 @@ tasks=[
         task: "Drag and Drop API",
         status: true,
     },
+    {
+        id:6,
+        task: "Night Mode",
+        status: false,
+    },
 ]
 states = [
     {
@@ -49,11 +54,14 @@ states = [
     },
 ]
 
+let width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+console.log(width);
 
 const todoListElement = document.getElementById("todo");
 const itemsLeft = document.getElementById("items-left");
 const newTaskUlElement = document.getElementById("new-task");
 const stateMenuElement = document.getElementById("states");
+const mobileStateMenuElement = document.getElementById("mobile-state-menu");
 const actionMenuElement = document.getElementById("actions");
 const clearCompleted = document.getElementById("clear-completed");
 clearCompleted.addEventListener("click", ClearCompleted);
@@ -90,10 +98,26 @@ function Reload(statedId) {
 
 function LoadListFooter(){
     CalculateItemsLeft();
-    LoadStateMenu();
+    
+    
+    if(width > 1000) LoadStateMenu();
+    else LoadSeperateStateMenu();
     LoadActionsMenu();
 }
+function LoadSeperateStateMenu(){
+    ClearLastSeperateStateMenu();
+    states.map((state)=>{
+        let li = document.createElement("li");
+        li.className=`state-menu-item ${state.id}${state.status? " active":""}`
+        li.innerHTML = state.state;
+        li.addEventListener("click", ToggleState)
+        mobileStateMenuElement.appendChild(li);
+    })
+}
 
+function ClearLastSeperateStateMenu(){
+    ClearTasks(mobileStateMenuElement);
+}
 function LoadActionsMenu(){
 
 }
@@ -116,7 +140,8 @@ function ToggleState(e){
     })
     
     ClearTasks(stateMenuElement);
-    LoadStateMenu();
+    if(width > 1000) LoadStateMenu();
+    else LoadSeperateStateMenu();
     LoadTasks(stateId);
 }
 
@@ -337,3 +362,41 @@ function SortTasksById(){
     })
 }
 AddDraggableListeners();
+
+// suppose i get an array of tasks that got id, task and a status
+let jsonTasks =[];
+
+FetchRestAPI();
+
+async function FetchRestAPI() {
+    fetch('https://jsonplaceholder.typicode.com/todos/1')
+        .then(response => response.json()) // get the response
+        .then(json=>JsonNewTask(json)) // proccess tasks
+        .then(tasksArr => tasks.push(...[tasksArr])).then(()=>Reload(GetActiveStateId())) // push to tasks global array
+        // I made the ...[] contradition to simulate that i got an array and expanded all of its components
+    }
+
+function JsonNewTask(json){
+    /*
+    IF IT WAS AN ARRAY OF OBJECTS THIS IS WHAT I WOULD USE
+    */
+
+    // let arr = []
+    // console.log(json);
+    // json.forEach((object)=>{
+    //     let newTask = {
+    //         id: json.id,
+    //         task: json.title,
+    //         status: json.completed,
+    //     }
+    //     arr.push(newTask);
+    // });
+    // return arr;
+
+    let newTask = {
+        id: tasks.length,
+        task: json.title,
+        status: json.completed,
+    }
+    return(newTask);
+}
