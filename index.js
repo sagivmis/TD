@@ -1,29 +1,34 @@
 tasks=[
     {
         id:0,
-        task: "Complete online Javascript course",
-        status: false,
+        task: "HTML",
+        status: true,
     },
     
     {
         id:1,
-        task: "Jog around the park 3x",
-        status: false,
+        task: "UI",
+        status: true,
     },
     {
         id:2,
-        task: "10 minutes meditation",
-        status: false,
+        task: "Clear Completed Button",
+        status: true,
     },
     {
         id:3,
-        task: "Eat",
+        task: "Functionality of states",
         status: false,
     },
     {
         id:4,
-        task: "Study for exam",
-        status: true,
+        task: "Fix checkbox appearance",
+        status: false,
+    },
+    {
+        id:5,
+        task: "Drag and Drop API",
+        status: false,
     },
 ]
 states = [
@@ -43,19 +48,37 @@ states = [
         status: false,
     },
 ]
+
+
 const todoListElement = document.getElementById("todo");
 const itemsLeft = document.getElementById("items-left");
 const newTaskUlElement = document.getElementById("new-task");
 const stateMenuElement = document.getElementById("states");
 const actionMenuElement = document.getElementById("actions");
+const clearCompleted = document.getElementById("clear-completed");
+clearCompleted.addEventListener("click", ClearCompleted);
 
-LoadTasks();
-NewTask();
+Reload();
 LoadListFooter();
 
-let newTodo = document.getElementById(`new-todo-item ${tasks.length+1}`)
+let newTodo = document.getElementById(`new-todo-item ${tasks.length}`)
 let newTaskTextInputField = GetTaskTextInputField();
 
+
+function ClearCompleted(){
+    tasks = tasks.filter((task)=>!task.status);
+    for(let i=0; i<tasks.length;i++){
+        tasks[i].id = i;
+    }
+    
+    Reload();
+}
+
+function Reload() {
+    ClearLastTask();
+    NewTask();
+    LoadTasks();
+}
 
 function LoadListFooter(){
     CalculateItemsLeft();
@@ -80,11 +103,10 @@ function LoadStateMenu(){
 function ToggleState(e){
     let stateId = parseInt(e.target.classList[1]);
     states.map((state)=>{
-        if(state.id === stateId)
-        state.status = true;
+        if(state.id === stateId) state.status = true;
         else state.status = false;
     })
-    console.log(stateId);
+    
     ClearTasks(stateMenuElement);
     LoadStateMenu();
 }
@@ -118,31 +140,30 @@ function ToggleStatus(e){
 function LoadTasks() {
     ClearTasks(todoListElement);
     if(tasks.length ===0){
-        let tag = document.createElement("li");
-        tag.className = `todo-item`;
+        let li = document.createElement("li");
+        li.className = `todo-item`;
 
-        tag.innerHTML = `No tasks to show.`;
-        todoListElement.appendChild(tag);
+        li.innerHTML = `No tasks to show.`;
+        todoListElement.appendChild(li);
         return;
     }
     tasks.map((task) => {
-        let tag = document.createElement("li");
-        tag.className = `todo-item ${task.id}`;
-        tag.onclick = ToggleStatus;
+        let li = document.createElement("li");
+        li.className = `todo-item ${task.id}`;
+        li.onclick = ToggleStatus;
         let checkbox = document.createElement("input");
-        if(task.status)checkbox.checked=true;
+        if(task.status) checkbox.checked=true;
         checkbox.type = "checkbox";
         checkbox.className = "task-done";
 
-        let text= document.createTextNode(" " + task.task);
-        text= document.createElement("p");
+        let text= document.createElement("p");
         text.innerHTML=" " + task.task;
         text.className = `todo-text ${task.status? "done":""}`;
 
-        tag.appendChild(checkbox);
-        tag.appendChild(text);
+        li.appendChild(checkbox);
+        li.appendChild(text);
         
-        todoListElement.appendChild(tag);
+        todoListElement.appendChild(li);
     });
     
     CalculateItemsLeft();
@@ -150,19 +171,19 @@ function LoadTasks() {
 function AddTask(e){
     let inputText;
     let newTaskData;
-    const checkbox = document.getElementById(`checkbox-${tasks.length+1}`);
+    const checkbox = document.getElementById(`checkbox-${tasks.length}`);
+    
     if(e.keyCode === 13){
         inputText= e.target.value;
 
         newTaskData = {
-            id: tasks.length+1,
+            id: tasks.length,
             task: inputText,
             status: checkbox.checked,
         }
+
         tasks.push(newTaskData);
-        LoadTasks();
-        ClearLastTask();
-        NewTask();
+        Reload();
     }
 }
 function ClearLastTask(){
@@ -170,23 +191,23 @@ function ClearLastTask(){
 }
 function NewTask(){
     
-    let tag = document.createElement("li");
-    tag.className = `new-todo-item ${tasks.length+1}`;
-    tag.id = `new-todo-item ${tasks.length+1}`;
+    let li = document.createElement("li");
+    li.className = `new-todo-item ${tasks.length}`;
+    li.id = `new-todo-item ${tasks.length}`;
     let checkbox= document.createElement("input");
     checkbox.type = "checkbox";
-    checkbox.id = `checkbox-${tasks.length+1}`;
+    checkbox.id = `checkbox-${tasks.length}`;
     checkbox.className = "task-done";
 
     let text= document.createElement("input");
     text.type = "text";
     text.className = `new-task-input`;
-    text.id = `text-${tasks.length+1}`;
+    text.id = `text-${tasks.length}`;
     text.onsubmit=AddTask;
 
     text.addEventListener("keyup", AddTask);
 
-    tag.appendChild(checkbox);
-    tag.appendChild(text);
-    newTaskUlElement.appendChild(tag);
+    li.appendChild(checkbox);
+    li.appendChild(text);
+    newTaskUlElement.appendChild(li);
 }
