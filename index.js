@@ -18,7 +18,7 @@ tasks=[
     {
         id:3,
         task: "Functionality of states",
-        status: false,
+        status: true,
     },
     {
         id:4,
@@ -35,12 +35,12 @@ states = [
     {
         id:0,
         state: "All",
-        status: false,
+        status: true,
     },
     {
         id:1,
         state: "Active",
-        status: true,
+        status: false,
     },
     {
         id:2,
@@ -58,7 +58,7 @@ const actionMenuElement = document.getElementById("actions");
 const clearCompleted = document.getElementById("clear-completed");
 clearCompleted.addEventListener("click", ClearCompleted);
 
-Reload();
+Reload(GetActiveStateId());
 LoadListFooter();
 
 let newTodo = document.getElementById(`new-todo-item ${tasks.length}`)
@@ -71,13 +71,21 @@ function ClearCompleted(){
         tasks[i].id = i;
     }
     
-    Reload();
+    Reload(GetActiveStateId());
 }
-
-function Reload() {
+function GetActiveStateId(){
+    let statedId =0;
+    states.map((state)=>{
+        if(state.status) stateId = state.id;
+    })
+    return stateId;
+}
+function Reload(statedId) {
+    
     ClearLastTask();
     NewTask();
-    LoadTasks();
+    LoadTasks(statedId);
+    // 0 for all, 1 for active, 2 for completed
 }
 
 function LoadListFooter(){
@@ -109,6 +117,7 @@ function ToggleState(e){
     
     ClearTasks(stateMenuElement);
     LoadStateMenu();
+    LoadTasks(stateId);
 }
 
 function GetTaskTextInputField() {
@@ -134,10 +143,14 @@ function ToggleStatus(e){
         if(task.id === taskId) task.status= !task.status;
     })
     
-    LoadTasks();
+    LoadTasks(GetActiveStateId());
 }
 
-function LoadTasks() {
+function LoadTasks(statusState) {
+    let status = statusState === 0 ? "All" : statusState === 1 ? "Active" : "Completed";
+
+    if(status === "Active") statusState = false;
+    else if(status === "Completed") statusState = true;
     ClearTasks(todoListElement);
     if(tasks.length ===0){
         let li = document.createElement("li");
@@ -148,26 +161,39 @@ function LoadTasks() {
         return;
     }
     tasks.map((task) => {
-        let li = document.createElement("li");
-        li.className = `todo-item ${task.id}`;
-        li.onclick = ToggleStatus;
-        let checkbox = document.createElement("input");
-        if(task.status) checkbox.checked=true;
-        checkbox.type = "checkbox";
-        checkbox.className = "task-done";
-
-        let text= document.createElement("p");
-        text.innerHTML=" " + task.task;
-        text.className = `todo-text ${task.status? "done":""}`;
-
-        li.appendChild(checkbox);
-        li.appendChild(text);
-        
-        todoListElement.appendChild(li);
+        if(statusState !== 0){
+            if(task.status === statusState){
+                CreateTaskElement(task);
+            }
+        }
+        else{
+            CreateTaskElement(task);
+        }
     });
     
     CalculateItemsLeft();
 }
+function CreateTaskElement(task) {
+    let li = document.createElement("li");
+    li.draggable = true;
+    li.className = `todo-item ${task.id}`;
+    li.onclick = ToggleStatus;
+    let checkbox = document.createElement("input");
+    if (task.status)
+        checkbox.checked = true;
+    checkbox.type = "checkbox";
+    checkbox.className = "task-done";
+
+    let text = document.createElement("p");
+    text.innerHTML = " " + task.task;
+    text.className = `todo-text ${task.status ? "done" : ""}`;
+
+    li.appendChild(checkbox);
+    li.appendChild(text);
+
+    todoListElement.appendChild(li);
+}
+
 function AddTask(e){
     let inputText;
     let newTaskData;
@@ -183,7 +209,7 @@ function AddTask(e){
         }
 
         tasks.push(newTaskData);
-        Reload();
+        Reload(GetActiveStateId());
     }
 }
 function ClearLastTask(){
@@ -211,3 +237,92 @@ function NewTask(){
     li.appendChild(text);
     newTaskUlElement.appendChild(li);
 }
+
+function AddDraggableListeners(){
+    const tasksElementsArray = document.querySelectorAll(".todo-item");
+    for(const task of tasksElementsArray){
+        
+        task.addEventListener('dragstart', DragStart);
+        task.addEventListener('dragend', DragEnd);
+        task.addEventListener('dragover', DragOver);
+        task.addEventListener('dragenter', DragEnter);
+        task.addEventListener('dragleave', DragLeave);
+        task.addEventListener('drop', DragDrop);
+    }
+    
+    // console.log(tasksElementsArray);
+}
+
+let draggedTaskId = -1;
+let dragOverTaskId = -1;
+
+function DragStart(e){
+    console.log("start");
+    
+    dragSrcEl = this;
+    draggedTaskId = parseInt(this.className.substring(10));
+
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
+
+    console.log("dragged id::" +draggedTaskId);
+}
+function DragEnd(e){
+    // console.log("end");
+
+    // console.log(dragOverTaskId);
+    // console.log(draggedTaskId);
+
+}
+function DragOver(e){
+    e.preventDefault();
+}
+function DragEnter(e){
+    e.preventDefault();
+}
+function DragLeave(e){
+}
+function DragDrop(e){
+    e.stopPropagation();
+
+    if (dragSrcEl !== this) {
+        // dragSrcEl.innerHTML = this.innerHTML;
+        // this.innerHTML = e.dataTransfer.getData('text/html');
+        dragOverTaskId= parseInt(this.className.substring(10));
+        console.log("dragged over::" + dragOverTaskId);
+      }
+      SwitchTasks(draggedTaskId, dragOverTaskId);
+      return false;
+    // console.log(e);
+}
+function SwitchTasks(draggedTaskId,dragOverTaskId){
+    console.log("switch");
+    console.log(dragOverTaskId);
+    console.log(draggedTaskId);
+    tasks.forEach((task)=>{
+        if(task.id == draggedTaskId) {
+            console.log(task);
+            task.id = dragOverTaskId;
+            console.log(tasks);
+        }
+        else if (task.id == dragOverTaskId) {
+            console.log(task);
+            task.id = draggedTaskId;
+            console.log(tasks);
+        }
+
+    })
+    // console.log(tasks);
+    console.log(tasks);
+    SortTasksById();
+    console.log(tasks);
+    Reload(GetActiveStateId());
+    AddDraggableListeners();
+}
+function SortTasksById(){
+    console.log("sorting");
+    tasks = tasks.sort((a,b)=>{
+        return a.id - b.id;
+    })
+}
+AddDraggableListeners();
