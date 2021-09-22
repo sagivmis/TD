@@ -37,9 +37,12 @@ h1 {
 .below-list {
     display: inline;
     background: none;
-    color: hsl(0, 0%, 98%);
+    color: hsl(235, 19%, 35%);
     margin-top: 100px;
     border-radius: 0px;
+    top: 80px;
+    left: 42.5%;
+    /* right: ; */
 }
 
 .items-left {

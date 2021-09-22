@@ -28,7 +28,7 @@ tasks=[
     {
         id:5,
         task: "Drag and Drop API",
-        status: false,
+        status: true,
     },
 ]
 states = [
