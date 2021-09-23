@@ -338,10 +338,8 @@ function AddDraggableListeners(){
     for(const task of tasksElementsArray){
         
         task.addEventListener('dragstart', DragStart);
-        task.addEventListener('dragend', DragEnd);
         task.addEventListener('dragover', DragOver);
         task.addEventListener('dragenter', DragEnter);
-        task.addEventListener('dragleave', DragLeave);
         task.addEventListener('drop', DragDrop);
     }
 }
@@ -360,16 +358,15 @@ function DragStart(e){
 
     console.log("dragged id::" +draggedTaskId);
 }
-function DragEnd(e){
-}
+
 function DragOver(e){
     e.preventDefault();
 }
+
 function DragEnter(e){
     e.preventDefault();
 }
-function DragLeave(e){
-}
+
 function DragDrop(e){
     e.stopPropagation();
 
