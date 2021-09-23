@@ -429,6 +429,8 @@ function SetNightMode(){
     const modeIcon = document.getElementById("mode-icon");
     modeIcon.onclick = SetDayMode;
     modeIcon.src = "images/icon-sun.svg"
+    
+    AddDraggableListeners();
 }
 
 function SetDayMode(){
@@ -455,6 +457,8 @@ function SetDayMode(){
     const modeIcon = document.getElementById("mode-icon");
     modeIcon.onclick = SetNightMode;
     modeIcon.src = "images/icon-moon.svg"
+    
+    AddDraggableListeners();
 }
 const modeIcon = document.getElementById("mode-icon");
 modeIcon.onclick = SetNightMode;
