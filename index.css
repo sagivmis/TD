@@ -4,7 +4,15 @@
     h1 {
         position: relative;
     }
-
+    .delete-task {
+        position: absolute;
+        right: 25px;
+        z-index: 1000;
+    }
+    .cross {
+        position: relative;
+        top: -25px;
+    }
     .title {
         text-transform: uppercase;
         position: relative;
@@ -72,7 +80,6 @@
 
     .menu {
         display: inline;
-        /* text-decoration: cur; */
         cursor: pointer;
     }
 
@@ -98,6 +105,7 @@
         margin-bottom: 10px;
         border-bottom: 0.1px solid hsl(233, 11%, 84%);
         cursor: pointer;
+        z-index: 5;
     }
     .todo-text {
         margin-left: 10px;
@@ -131,8 +139,6 @@
         font-weight: 700;
     }
     .list-footer {
-        /* display: inline-block; */
-        /* margin-right: 5px; */
         padding: 5px 10px;
         position: relative;
         color: hsl(233, 11%, 84%);
@@ -155,12 +161,6 @@
         z-index: 2;
         border-radius: 5px;
         padding: 15px 25px;
-        /* font-size: 40px; */
-        /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.19); */
-    }
-
-    .task-done {
-        /* width: 20px; */
     }
 }
 
@@ -168,7 +168,15 @@
     h1 {
         position: relative;
     }
-
+    .delete-task {
+        position: absolute;
+        right: 25px;
+        z-index: 1000;
+    }
+    .cross {
+        position: relative;
+        top: -25px;
+    }
     .title {
         text-transform: uppercase;
         position: absolute;
@@ -234,15 +242,12 @@
     }
     .below-list {
         display: inline;
-        /* background: none; */
         color: hsl(235, 19%, 35%);
         margin-top: 100px;
         border-radius: 0px;
         top: 150px;
         left: 22.5%;
         background: rgba(204, 204, 204, 0.1);
-
-        /* right: ; */
     }
 
     .items-left {
@@ -311,8 +316,6 @@
         font-weight: 700;
     }
     .list-footer {
-        /* display: inline-block; */
-        /* margin-right: 5px; */
         padding: 5px 10px;
         position: relative;
         color: hsl(233, 11%, 84%);
@@ -335,11 +338,5 @@
         z-index: 2;
         border-radius: 5px;
         padding: 15px 25px;
-        /* font-size: 40px; */
-        /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.19); */
-    }
-
-    .task-done {
-        /* width: 20px; */
     }
 }

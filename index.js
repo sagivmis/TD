@@ -189,6 +189,7 @@ function TasksLengthByState(){
     })
     return length;
 }
+
 function LoadTasks(statusState) {
     let status = statusState === 0 ? "All" : statusState === 1 ? "Active" : "Completed";
 
@@ -216,12 +217,16 @@ function LoadTasks(statusState) {
     
     CalculateItemsLeft();
 }
+
 function CreateTaskElement(task) {
     let li = document.createElement("li");
     li.draggable = true;
     li.className = `todo-item ${task.id}`;
     li.id = `todo`;
     li.onclick = ToggleStatus;
+    li.onmouseenter = AddDeleteTask;
+    li.onmouseout = RemoveDeleteTask;
+
     let checkbox = document.createElement("input");
     
     if (task.status)
@@ -237,6 +242,38 @@ function CreateTaskElement(task) {
     li.appendChild(text);
 
     todoListElement.appendChild(li);
+}
+function DeleteTask(e){
+    console.log("in");
+    let taskId = e.target.classList[1];
+    console.log(taskId);
+}
+function AddDeleteTask(e){
+    if(e.target.classList.contains('todo-item')){
+        // e.target.className+=' delete-task'
+        let svg = document.createElement('img');
+        svg.src = "images/icon-cross.svg";
+        svg.id = `delete-${e.target.classList[1]}`;
+        svg.className = "cross";
+        
+        let div = document.createElement("div");
+        div.onclick =DeleteTask;
+        div.id = `delete-div-${e.target.classList[1]}`;
+        div.className = "delete-task";
+        
+        div.appendChild(svg);
+        e.target.appendChild(div);
+        AddDraggableListeners();
+    }
+}
+
+function RemoveDeleteTask(e){
+    if(e.target.classList.contains('todo-item')){
+        let div = document.getElementById(`delete-div-${e.target.classList[1]}`);
+
+        AddDraggableListeners()
+        if(div) e.target.removeChild(div);
+    }
 }
 
 function AddTask(e){
