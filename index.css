@@ -16,6 +16,14 @@
         top: 70px;
         font-family: 'Josefin Sans', sans-serif;
     }
+
+    .mode {
+        position: relative;
+        left: 67.5%;
+        top: 35px;
+        cursor: pointer;
+    }
+
     .background {
         position: absolute;
         width: 100%;
@@ -24,7 +32,6 @@
     .list {
         margin: 0px;
     }
-
     .container {
         font-family: 'Josefin Sans', sans-serif;
         background-color: hsl(0, 0%, 98%);
@@ -35,6 +42,18 @@
         top: 70px;
         border-radius: 6px;
     }
+
+    .container-below {
+        font-family: 'Josefin Sans', sans-serif;
+        background-color: hsl(0, 0%, 98%);
+        position: relative;
+        width: 320px;
+
+        left: 25px;
+        top: 120px;
+        border-radius: 6px;
+    }
+
     .below-list {
         display: inline;
         background: none;
@@ -161,6 +180,13 @@
         top: 40px;
         font-family: 'Josefin Sans', sans-serif;
     }
+
+    .mode {
+        position: relative;
+        left: 60.5%;
+        top: 45px;
+        cursor: pointer;
+    }
     .background {
         position: absolute;
         width: 100%;
@@ -208,12 +234,14 @@
     }
     .below-list {
         display: inline;
-        background: none;
+        /* background: none; */
         color: hsl(235, 19%, 35%);
         margin-top: 100px;
         border-radius: 0px;
         top: 150px;
         left: 22.5%;
+        background: rgba(204, 204, 204, 0.1);
+
         /* right: ; */
     }
 

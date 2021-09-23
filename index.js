@@ -33,6 +33,11 @@ tasks=[
     {
         id:6,
         task: "Night Mode",
+        status: true,
+    },
+    {
+        id:7,
+        task: "Delete task",
         status: false,
     },
 ]
@@ -64,6 +69,7 @@ const stateMenuElement = document.getElementById("states");
 const mobileStateMenuElement = document.getElementById("mobile-state-menu");
 const actionMenuElement = document.getElementById("actions");
 const clearCompleted = document.getElementById("clear-completed");
+const listFooter = document.getElementById("list-footer")
 clearCompleted.addEventListener("click", ClearCompleted);
 
 Reload(GetActiveStateId());
@@ -93,23 +99,24 @@ function Reload(statedId) {
     ClearLastTask();
     NewTask();
     LoadTasks(statedId);
-    AddDraggableListeners();
     // 0 for all, 1 for active, 2 for completed
+
+    AddDraggableListeners();
 }
 
 function LoadListFooter(){
     CalculateItemsLeft();
-    
-    
     if(width > 1000) LoadStateMenu();
     else LoadSeperateStateMenu();
     LoadActionsMenu();
 }
+
 function LoadSeperateStateMenu(){
     ClearLastSeperateStateMenu();
     states.map((state)=>{
         let li = document.createElement("li");
         li.className=`state-menu-item ${state.id}${state.status? " active":""}`
+        li.id = `seperate-state-menu`
         li.innerHTML = state.state;
         li.addEventListener("click", ToggleState)
         mobileStateMenuElement.appendChild(li);
@@ -213,6 +220,7 @@ function CreateTaskElement(task) {
     let li = document.createElement("li");
     li.draggable = true;
     li.className = `todo-item ${task.id}`;
+    li.id = `todo`;
     li.onclick = ToggleStatus;
     let checkbox = document.createElement("input");
     
@@ -392,3 +400,64 @@ function JsonNewTask(json){
     }
     return(newTask);
 }
+
+function SetNightMode(){
+    const bg = document.getElementById("bg");
+    bg.src = "images/bg-desktop-dark.jpg";
+
+    const body = document.querySelector("body")
+    body.style.backgroundColor = "hsl(235, 21%, 11%)";
+
+    const containers = document.querySelectorAll(".container");
+    containers.forEach((container)=>{
+        container.style.backgroundColor = "hsl(235, 24%, 19%)";
+    })
+
+    const todo_items = document.querySelectorAll("#todo");
+    todo_items.forEach((todo)=>{
+        // todo.style.borderBottom = "0.1px solid hsl(234, 11%, 52%)";
+    })
+
+    if(width>1000){
+        const seperateStateMenuMobile = document.getElementById("mobile-state-menu");
+        seperateStateMenuMobile.style.backgroundColor = "hsl(235, 24%, 19%)";
+    }
+    
+    const inputfield = document.querySelector(".new-task-input");
+    inputfield.style.backgroundColor = "hsl(235, 24%, 19%)";
+
+    const modeIcon = document.getElementById("mode-icon");
+    modeIcon.onclick = SetDayMode;
+    modeIcon.src = "images/icon-sun.svg"
+}
+
+function SetDayMode(){
+    const bg = document.getElementById("bg");
+    bg.src = "images/bg-desktop-light.jpg";
+
+    const body = document.querySelector("body")
+    body.style.backgroundColor = "white";
+
+    const containers = document.querySelectorAll(".container");
+    containers.forEach((container)=>{
+        container.style.backgroundColor = "hsl(0, 0%, 98%)";
+    })
+
+    if(width>1000){
+    const seperateStateMenuMobile = document.getElementById("mobile-state-menu");
+    seperateStateMenuMobile.style.backgroundColor = "hsl(0, 0%, 98%)";
+}
+
+    const inputfield = document.querySelector(".new-task-input");
+    inputfield.style.backgroundColor = "hsl(0, 0%, 98%)";
+    
+    
+    const modeIcon = document.getElementById("mode-icon");
+    modeIcon.onclick = SetNightMode;
+    modeIcon.src = "images/icon-moon.svg"
+}
+const modeIcon = document.getElementById("mode-icon");
+modeIcon.onclick = SetNightMode;
+modeIcon.src = "images/icon-moon.svg"
+// SetNightMode()
+// SetDayMode()
