@@ -215,21 +215,18 @@
         top: -25px;
     }
     .btn {
-        display: inline-block;
         background: hsl(0, 0%, 98%);
         color: #fff;
         border: none;
-        padding: 10px 20px;
-        margin: 5px;
+        padding: 5px 10px;
         border-radius: 5px;
         cursor: pointer;
         text-decoration: none;
         font-size: 15px;
         color: #fff;
-        /* font-family: inherit; */
+        font-family: inherit;
 
         filter: brightness(1);
-        font-family: 'Lobster', cursive;
     }
     .btn:hover {
         filter: brightness(1.08);
