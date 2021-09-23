@@ -264,7 +264,6 @@ function DeleteTask(e){
 }
 function AddDeleteTask(e){
     if(e.target.classList.contains('todo-item')){
-        // e.target.className+=' delete-task'
         let svg = document.createElement('img');
         svg.src = "images/icon-cross.svg";
         svg.id = `delete-${e.target.classList[1]}`;
@@ -345,8 +344,6 @@ function AddDraggableListeners(){
         task.addEventListener('dragleave', DragLeave);
         task.addEventListener('drop', DragDrop);
     }
-    
-    // console.log(tasksElementsArray);
 }
 
 let draggedTaskId = -1;
@@ -364,11 +361,6 @@ function DragStart(e){
     console.log("dragged id::" +draggedTaskId);
 }
 function DragEnd(e){
-    // console.log("end");
-
-    // console.log(dragOverTaskId);
-    // console.log(draggedTaskId);
-
 }
 function DragOver(e){
     e.preventDefault();
@@ -382,14 +374,11 @@ function DragDrop(e){
     e.stopPropagation();
 
     if (dragSrcEl !== this) {
-        // dragSrcEl.innerHTML = this.innerHTML;
-        // this.innerHTML = e.dataTransfer.getData('text/html');
         dragOverTaskId= parseInt(this.className.substring(10));
         console.log("dragged over::" + dragOverTaskId);
       }
       SwitchTasks(draggedTaskId, dragOverTaskId);
       return false;
-    // console.log(e);
 }
 function SwitchTasks(draggedTaskId,dragOverTaskId){
     tasks.forEach((task)=>{
@@ -514,5 +503,3 @@ function SetDayMode(){
 const modeIcon = document.getElementById("mode-icon");
 modeIcon.onclick = SetNightMode;
 modeIcon.src = "images/icon-moon.svg"
-// SetNightMode()
-// SetDayMode()
