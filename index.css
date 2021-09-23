@@ -110,6 +110,7 @@
     .todo-text {
         margin-left: 10px;
         display: inline-block;
+        /* z-index: ; */
     }
     .done {
         text-decoration: line-through;
@@ -162,9 +163,45 @@
         border-radius: 5px;
         padding: 15px 25px;
     }
+
+    .btn {
+        display: inline-block;
+        position: absolute;
+        background: hsl(0, 0%, 98%);
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        /* margin: 5px; */
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 15px;
+        color: #fff;
+        /* font-family: inherit; */
+
+        filter: brightness(1);
+        font-family: 'Lobster', cursive;
+    }
+    .btn:hover {
+        filter: brightness(1.08);
+        transition: 0.25s;
+    }
+    .btn:focus {
+        outline: none;
+    }
+
+    .btn:active {
+        transform: scale(0.98);
+    }
+    .hidden {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 1000px) {
+    .hidden {
+        display: none;
+    }
     h1 {
         position: relative;
     }
@@ -176,6 +213,34 @@
     .cross {
         position: relative;
         top: -25px;
+    }
+    .btn {
+        display: inline-block;
+        background: hsl(0, 0%, 98%);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 15px;
+        color: #fff;
+        /* font-family: inherit; */
+
+        filter: brightness(1);
+        font-family: 'Lobster', cursive;
+    }
+    .btn:hover {
+        filter: brightness(1.08);
+        transition: 0.25s;
+    }
+    .btn:focus {
+        outline: none;
+    }
+
+    .btn:active {
+        transform: scale(0.98);
     }
     .title {
         text-transform: uppercase;

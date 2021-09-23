@@ -217,7 +217,14 @@ function LoadTasks(statusState) {
     
     CalculateItemsLeft();
 }
-
+function RemoveHidden(e){
+    let task = e.target.childNodes[0];
+    if(task) task.classList.remove('hidden')
+}
+function AddHidden(e){
+    let task = e.target.childNodes[0];
+    if(task) task.classList.add('hidden')
+}
 function CreateTaskElement(task) {
     let li = document.createElement("li");
     li.draggable = true;
@@ -226,7 +233,14 @@ function CreateTaskElement(task) {
     li.onclick = ToggleStatus;
     li.onmouseenter = AddDeleteTask;
     li.onmouseout = RemoveDeleteTask;
-
+    // li.onmouseenter = RemoveHidden;
+    // li.onmouseout = AddHidden;
+    
+    let button = document.createElement("button");
+    button.innerHTML = `<img src="images\\icon-cross.svg"/>`
+    button.className = 'btn delete-task hidden'
+    button.onclick = DeleteTask;
+    li.appendChild(button);
     let checkbox = document.createElement("input");
     
     if (task.status)
